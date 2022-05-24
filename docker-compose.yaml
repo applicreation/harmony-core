@@ -1,0 +1,18 @@
+---
+
+services:
+  proxy:
+    image: ghcr.io/applicreation/harmony-proxy:latest
+    ports:
+      - 80:80
+  core:
+    image: node:lts-alpine
+    ports:
+      - 3000:3000
+    command:
+      - npm
+      - run
+      - dev
+    working_dir: /app
+    volumes:
+      - ./app:/app
