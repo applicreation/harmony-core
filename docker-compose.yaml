@@ -17,4 +17,4 @@ services:
     working_dir: /app
     volumes:
       - ./app:/app
-      - ./.harmony:/root/.harmony:ro
+      - ./.harmony/core:/root/.harmony:ro
