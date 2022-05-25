@@ -1,10 +1,4 @@
 ---
 
-name: Demo
-light: "#dc90bd"
-dark: "#80489a"
-modules:
-  - name: Catalog
-    url: /catalog
-  - name: Docs
-    url: /docs
+name: Core
+modules: [ ]
