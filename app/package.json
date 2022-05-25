@@ -11,6 +11,9 @@
 		"lint": "prettier --check --plugin-search-dir=. . && eslint .",
 		"format": "prettier --write --plugin-search-dir=. ."
 	},
+	"dependencies": {
+		"yaml": "^2.1.0"
+	},
 	"devDependencies": {
 		"@playwright/test": "^1.21.0",
 		"@sveltejs/adapter-auto": "next",

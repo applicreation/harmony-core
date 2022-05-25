@@ -1,3 +1,7 @@
+<script>
+    import config from '$lib/stores/config.js';
+</script>
+
 <header class="h-100 bg-light text-white">
     <a href="/" class="header-brand w-100 fs-1 p-2 mb-3 d-inline-block text-center text-white text-decoration-none">
         Harmony
@@ -5,6 +9,9 @@
 
     <div class="list-group bg-white mx-3">
         <a href="/" class="list-group-item list-group-item-action">Home</a>
+        {#each Object.values($config.modules || {}) as module}
+            <a href="{module.url}" class="list-group-item list-group-item-action">{module.name}</a>
+        {/each}
     </div>
 </header>
 

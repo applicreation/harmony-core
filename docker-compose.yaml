@@ -7,6 +7,7 @@ services:
       - 80:80
   core:
     image: node:lts-alpine
+    restart: on-failure
     ports:
       - 3000:3000
     command:
@@ -16,3 +17,4 @@ services:
     working_dir: /app
     volumes:
       - ./app:/app
+      - ./.harmony:/root/.harmony:ro
