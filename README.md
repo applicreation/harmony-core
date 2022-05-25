@@ -32,7 +32,6 @@ services:
 
 name: Core
 modules: [ ]
-
 ```
 
 ## Development
