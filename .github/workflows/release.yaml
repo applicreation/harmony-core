@@ -7,4 +7,4 @@ on:
       - published
 jobs:
   docker-release:
-    uses: applicreation/github-workflows/.github/workflows/docker-release.yaml@main
+    uses: applicreation/github-workflows/.github/workflows/docker-release.yaml@v1
