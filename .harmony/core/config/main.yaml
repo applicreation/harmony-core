@@ -1,4 +1,9 @@
 ---
 
-name: Core
-modules: [ ]
+modules:
+  - id: test-one
+  - id: test-two
+  - id: test-three
+  - id: test-four
+  - id: test-five
+  - id: test-six

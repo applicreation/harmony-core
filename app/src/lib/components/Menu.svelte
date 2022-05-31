@@ -3,16 +3,30 @@
 </script>
 
 <header class="h-100 bg-light text-white">
-    <a href="/" class="header-brand w-100 fs-1 p-2 mb-3 d-inline-block text-center text-white text-decoration-none">
-        Harmony
-    </a>
-
-    <div class="list-group bg-white mx-3">
-        <a href="/" class="list-group-item list-group-item-action">Home</a>
-        {#each Object.values($config.modules || {}) as module}
-            <a href="{module.url}" class="list-group-item list-group-item-action">{module.name}</a>
-        {/each}
+    <div class="hstack gap-3 mx-2">
+        <a href="/" class="header-brand w-100 fs-1 p-2 d-inline-block text-lg-center text-white text-decoration-none">
+            Harmony
+        </a>
+        {#if Object.values($config.modules || {}).length > 0}
+            <div class="d-lg-none d-grid">
+                <button class="btn btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#main-menu"
+                        aria-expanded="false" aria-controls="main-menu">
+                    Menu
+                </button>
+            </div>
+        {/if}
     </div>
+
+    {#if Object.values($config.modules || {}).length > 0}
+        <div class="collapse" id="main-menu">
+            <div class="list-group bg-white m-3">
+                <a href="/" class="list-group-item list-group-item-action">Home</a>
+                {#each Object.values($config.modules) as module}
+                    <a href="{module.urlCore}" class="list-group-item list-group-item-action">{module.name}</a>
+                {/each}
+            </div>
+        </div>
+    {/if}
 </header>
 
 <style>
@@ -27,5 +41,11 @@
 
     .header-brand {
         font-family: 'Pacifico', cursive;
+    }
+
+    @media (min-width: 992px) {
+        #main-menu {
+            display: block !important;
+        }
     }
 </style>

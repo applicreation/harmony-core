@@ -4,7 +4,9 @@
     /** @type {import('./__types/[slug]').Load} */
     export async function load({params, fetch}) {
         const url = `${!browser ? 'http://proxy' : ''}/module/${params.catchall}/`;
-        const response = await fetch(url);
+        const options = {headers: {'User-Agent': 'harmony-core'}};
+
+        const response = await fetch(url, options);
 
         return {
             status: response.status,
