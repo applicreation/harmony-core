@@ -1,4 +1,6 @@
 <script>
+    import {navigating} from '$app/stores'
+    import {SyncLoader} from 'svelte-loading-spinners'
     import Menu from '$lib/components/Menu.svelte';
 </script>
 
@@ -12,7 +14,13 @@
             <Menu/>
         </div>
         <div class="col">
-            <slot></slot>
+            {#if $navigating}
+                <div class="h-100 py-5 d-flex align-items-center justify-content-center">
+                    <SyncLoader color="#F79905"/>
+                </div>
+            {:else}
+                <slot></slot>
+            {/if}
         </div>
     </div>
 </div>

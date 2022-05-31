@@ -36,7 +36,7 @@
         background: #F42714; /* Old browsers */
         background: -moz-linear-gradient(45deg, #F42714 0%, #F79905 100%); /* FF3.6-15 */
         background: -webkit-linear-gradient(45deg, #F42714 0%, #F79905 100%); /* Chrome10-25,Safari5.1-6 */
-        background: linear-gradient(45deg, #F42714 0%, #F79905z 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        background: linear-gradient(45deg, #F42714 0%, #F79905 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     }
 
     .header-brand {
