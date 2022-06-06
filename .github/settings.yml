@@ -3,7 +3,7 @@
 repository:
   name: harmony-core
   description: Harmony core
-  homepage: https://github.com/lickdltd/harmony-core
+  homepage: https://github.com/applicreation/harmony-core
   topics: harmony, core
   private: false
   has_issues: true
