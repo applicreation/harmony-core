@@ -1,5 +1,7 @@
 <script>
     import config from '$lib/stores/config.js';
+
+    export let logout;
 </script>
 
 <header class="h-100 bg-light text-white">
@@ -17,16 +19,22 @@
         {/if}
     </div>
 
-    {#if Object.values($config.modules || {}).length > 0}
-        <div class="collapse" id="main-menu">
+    <div class="collapse" id="main-menu">
+        <div class="list-group bg-white m-3">
+            <a href="/" class="list-group-item list-group-item-action">Home</a>
+        </div>
+        {#if Object.values($config.modules || {}).length > 0}
             <div class="list-group bg-white m-3">
-                <a href="/" class="list-group-item list-group-item-action">Home</a>
                 {#each Object.values($config.modules) as module}
                     <a href="{module.urlCore}" class="list-group-item list-group-item-action">{module.name}</a>
                 {/each}
             </div>
+        {/if}
+        <div class="list-group bg-white m-3">
+            <a href="/#" on:click="{logout}" class="list-group-item list-group-item-action">Logout</a>
         </div>
-    {/if}
+    </div>
+
 </header>
 
 <style>

@@ -1,6 +1,12 @@
 ---
 
+auth:
+  auth0:
+    domain: harmony-dev.eu.auth0.com
+    client_id: peNrbX6FNFKezAEkjejd4bIvGOpXVh2d
 modules:
+  - id: catalog
+  - id: docs
   - id: test-one
   - id: test-two
   - id: test-three
