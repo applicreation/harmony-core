@@ -4,28 +4,11 @@
     import {SyncLoader} from 'svelte-loading-spinners'
     import auth from "$lib/services/auth";
     import Menu from '$lib/components/Menu.svelte';
-    import {isAuthenticatedChecked, isAuthenticated, user} from "$lib/stores/user.js";
-
-    let auth0Client;
+    import {isChecked, isUser} from "$lib/stores/user.js";
 
     onMount(async () => {
-        auth0Client = await auth.createClient();
-
-        const isAuth = await auth0Client.isAuthenticated();
-
-        isAuthenticatedChecked.set(typeof isAuth == 'boolean');
-        isAuthenticated.set(isAuth);
-
-        user.set(await auth0Client.getUser());
+        await auth.isAuthenticated();
     });
-
-    function login() {
-        auth.loginWithPopup(auth0Client);
-    }
-
-    function logout() {
-        auth.logout(auth0Client);
-    }
 </script>
 
 <svelte:head>
@@ -33,14 +16,14 @@
 </svelte:head>
 
 <div class="body flex-grow-1 d-lg-flex">
-    {#if !$isAuthenticatedChecked}
+    {#if !$isChecked}
         <div class="w-100 h-100 py-5 d-flex align-items-center justify-content-center">
             <SyncLoader color="#F79905"/>
         </div>
-    {:else if $isAuthenticated}
+    {:else if $isUser}
         <div class="row g-0 w-100">
             <div class="col-12 col-lg-2">
-                <Menu logout="{logout}"/>
+                <Menu/>
             </div>
             <div class="col">
                 {#if $navigating}
@@ -54,7 +37,7 @@
         </div>
     {:else}
         <div class="h-100 w-100 py-5 d-flex align-items-center justify-content-center auth">
-            <a class="btn btn-secondary" href="/#" on:click="{login}">Log In</a>
+            <a class="btn btn-secondary" href="/#" on:click="{auth.login}">Log In</a>
         </div>
     {/if}
 </div>

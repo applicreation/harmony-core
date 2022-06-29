@@ -1,7 +1,7 @@
 import {writable} from "svelte/store";
 
-export const isAuthenticatedChecked = writable(false);
-export const isAuthenticated = writable(false);
+export const isChecked = writable(false);
+export const isUser = writable(false);
 export const user = writable({});
 export const popupOpen = writable(false);
 export const error = writable();

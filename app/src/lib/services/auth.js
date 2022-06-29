@@ -1,39 +1,52 @@
+import {browser} from '$app/env';
 import createAuth0Client from "@auth0/auth0-spa-js";
-import {user, isAuthenticated, popupOpen} from '$lib/stores/user.js';
+import {isChecked, isUser, user, popupOpen} from '$lib/stores/user.js';
 
-const fetchAuthConfig = () => fetch("/config.json");
+const fetchConfig = () => fetch("/config.json");
 
-async function createClient() {
-    const response = await fetchAuthConfig();
-    const config = await response.json();
+let client;
 
-    let auth0Client = await createAuth0Client(config.auth.auth0);
+async function getClient() {
+    if (typeof client !== 'undefined') return client;
+    if (!browser) return client = {getUser: () => {}, loginWithPopup: () => {}, logout: () => {}};
 
-    return auth0Client;
+    const config = await (await fetchConfig()).json();
+
+    return client = await createAuth0Client(config.auth.auth0);
 }
 
-async function loginWithPopup(client, options) {
+async function isAuthenticated() {
+    const client = await getClient();
+    const authUser = await client.getUser();
+
+    isChecked.set(true);
+
+    isUser.set(typeof authUser != 'undefined');
+    user.set(authUser);
+}
+
+async function login(options) {
     popupOpen.set(true);
+
     try {
         await client.loginWithPopup(options);
 
-        user.set(await client.getUser());
-        isAuthenticated.set(true);
-    } catch (e) {
-        // eslint-disable-next-line
-        console.error(e);
+        const authUser = await client.getUser();
+
+        isUser.set(typeof authUser != 'undefined');
+        user.set(authUser);
     } finally {
         popupOpen.set(false);
     }
 }
 
-function logout(client) {
+function logout() {
     return client.logout();
 }
 
 const auth = {
-    createClient,
-    loginWithPopup,
+    isAuthenticated,
+    login,
     logout
 };
 

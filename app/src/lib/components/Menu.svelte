@@ -1,7 +1,6 @@
 <script>
+    import auth from "$lib/services/auth";
     import config from '$lib/stores/config.js';
-
-    export let logout;
 </script>
 
 <header class="h-100 bg-light text-white">
@@ -31,7 +30,7 @@
             </div>
         {/if}
         <div class="list-group bg-white m-3">
-            <a href="/#" on:click="{logout}" class="list-group-item list-group-item-action">Logout</a>
+            <a href="/#" on:click="{auth.logout}" class="list-group-item list-group-item-action">Logout</a>
         </div>
     </div>
 
