@@ -18,3 +18,15 @@ services:
     volumes:
       - ./.harmony/core:/root/.harmony:ro
       - ./app:/app
+  catalog:
+    image: ghcr.io/applicreation/harmony-module-catalog:v0
+    env_file:
+      - ./.harmony/catalog/.env
+    volumes:
+      - ./.harmony/catalog:/root/.harmony:ro
+  docs:
+    image: ghcr.io/applicreation/harmony-module-docs:v0
+    env_file:
+      - ./.harmony/docs/.env
+    volumes:
+      - ./.harmony/docs:/root/.harmony:ro
