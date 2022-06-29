@@ -37,7 +37,7 @@
         </div>
     {:else}
         <div class="h-100 w-100 py-5 d-flex align-items-center justify-content-center auth">
-            <a class="btn btn-secondary" href="/#" on:click="{auth.login}">Log In</a>
+            <a class="btn btn-secondary" on:click="{auth.login}">Log In</a>
         </div>
     {/if}
 </div>

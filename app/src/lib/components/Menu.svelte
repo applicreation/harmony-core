@@ -30,7 +30,7 @@
             </div>
         {/if}
         <div class="list-group bg-white m-3">
-            <a href="/#" on:click="{auth.logout}" class="list-group-item list-group-item-action">Logout</a>
+            <a href="#" on:click="{auth.logout}" class="list-group-item list-group-item-action">Logout</a>
         </div>
     </div>
 
