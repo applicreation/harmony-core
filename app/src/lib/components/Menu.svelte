@@ -1,6 +1,7 @@
 <script>
     import auth from "$lib/services/auth";
     import config from '$lib/stores/config.js';
+    import {isAuthenticating} from "$lib/stores/user.js";
 </script>
 
 <header class="h-100 bg-light text-white">
@@ -29,9 +30,11 @@
                 {/each}
             </div>
         {/if}
-        <div class="list-group bg-white m-3">
-            <a href="#" on:click="{auth.logout}" class="list-group-item list-group-item-action">Logout</a>
-        </div>
+        {#if $isAuthenticating}
+            <div class="list-group bg-white m-3">
+                <a href="#" on:click="{auth.logout}" class="list-group-item list-group-item-action">Logout</a>
+            </div>
+        {/if}
     </div>
 
 </header>

@@ -4,7 +4,7 @@
     import {SyncLoader} from 'svelte-loading-spinners'
     import auth from "$lib/services/auth";
     import Menu from '$lib/components/Menu.svelte';
-    import {isChecked, isUser} from "$lib/stores/user.js";
+    import {isAuthenticating, isChecked, isUser} from "$lib/stores/user.js";
 
     onMount(async () => await auth.isAuthenticated());
 </script>
@@ -18,7 +18,7 @@
         <div class="w-100 h-100 py-5 d-flex align-items-center justify-content-center">
             <SyncLoader color="#F79905"/>
         </div>
-    {:else if $isUser}
+    {:else if !$isAuthenticating || $isUser}
         <div class="row g-0 w-100">
             <div class="col-12 col-lg-2">
                 <Menu/>

@@ -1,23 +1,33 @@
 import {browser} from '$app/env';
 import createAuth0Client from "@auth0/auth0-spa-js";
-import {isChecked, isUser, user, popupOpen} from '$lib/stores/user.js';
+import {isAuthenticating, isChecked, isUser, user, popupOpen} from '$lib/stores/user.js';
 
 const fetchConfig = () => fetch("/config.json");
 
 let client;
 
 async function getClient() {
-    if (typeof client !== 'undefined') return client;
-    if (!browser) return client = {getUser: () => {}, loginWithPopup: () => {}, logout: () => {}};
+    if (typeof client !== 'undefined') {
+        return client;
+    }
 
-    const config = await (await fetchConfig()).json();
+    const config = (await (await fetchConfig()).json()).auth || {};
+    if (!browser || !config.auth0) {
+        isAuthenticating.set(false);
 
-    return client = await createAuth0Client(config.auth.auth0);
+        return client = null;
+    }
+
+    return client = await createAuth0Client(config.auth0);
 }
 
 async function isAuthenticated() {
     const client = await getClient();
-    const authUser = await client.getUser();
+
+    let authUser;
+    if (client !== null) {
+        authUser = await client.getUser();
+    }
 
     isUser.set(typeof authUser != 'undefined');
     user.set(authUser);
@@ -26,6 +36,8 @@ async function isAuthenticated() {
 }
 
 async function login(options) {
+    const client = await getClient();
+
     popupOpen.set(true);
 
     try {
@@ -40,7 +52,12 @@ async function login(options) {
     }
 }
 
-function logout() {
+async function logout() {
+    const client = await getClient();
+
+    isUser.set(false);
+    user.set({});
+
     return client.logout();
 }
 
