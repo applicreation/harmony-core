@@ -19,10 +19,10 @@ async function isAuthenticated() {
     const client = await getClient();
     const authUser = await client.getUser();
 
-    isChecked.set(true);
-
     isUser.set(typeof authUser != 'undefined');
     user.set(authUser);
+
+    isChecked.set(true);
 }
 
 async function login(options) {

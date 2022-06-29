@@ -6,9 +6,7 @@
     import Menu from '$lib/components/Menu.svelte';
     import {isChecked, isUser} from "$lib/stores/user.js";
 
-    onMount(async () => {
-        await auth.isAuthenticated();
-    });
+    onMount(async () => await auth.isAuthenticated());
 </script>
 
 <svelte:head>
