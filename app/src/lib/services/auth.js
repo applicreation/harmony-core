@@ -35,7 +35,7 @@ async function isAuthenticated() {
         const domains = (config.constraints || {}).domain || []
         const domain = authUser.email.substring(authUser.email.indexOf('@')+1)
 
-        isAllowed.set(domains.indexOf(domain) >= 0);
+        isAllowed.set(domains.length <= 0 || domains.indexOf(domain) >= 0);
     }
 
     user.set(authUser);
@@ -59,7 +59,7 @@ async function login(options) {
             const domains = (config.constraints || {}).domain || []
             const domain = authUser.email.substring(authUser.email.indexOf('@')+1)
 
-            isAllowed.set(domains.indexOf(domain) >= 0);
+            isAllowed.set(domains.length <= 0 || domains.indexOf(domain) >= 0);
         }
 
         user.set(authUser);
