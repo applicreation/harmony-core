@@ -1,17 +1,17 @@
 import {browser} from '$app/env';
 import createAuth0Client from "@auth0/auth0-spa-js";
-import {isAuthenticating, isChecked, isUser, user, popupOpen} from '$lib/stores/user.js';
+import {isAuthenticating, isChecked, isUser, isAllowed, user, popupOpen} from '$lib/stores/user.js';
 
 const fetchConfig = () => fetch("/config.json");
 
-let client;
+let config, client;
 
 async function getClient() {
     if (typeof client !== 'undefined') {
         return client;
     }
 
-    const config = (await (await fetchConfig()).json()).auth || {};
+    config = (await (await fetchConfig()).json()).auth || {};
     if (!browser || !config.auth0) {
         isAuthenticating.set(false);
 
@@ -29,7 +29,15 @@ async function isAuthenticated() {
         authUser = await client.getUser();
     }
 
-    isUser.set(typeof authUser != 'undefined');
+    if (typeof authUser != 'undefined') {
+        isUser.set(true);
+
+        const domains = (config.constraints || {}).domain || []
+        const domain = authUser.email.substring(authUser.email.indexOf('@')+1)
+
+        isAllowed.set(domains.indexOf(domain) >= 0);
+    }
+
     user.set(authUser);
 
     isChecked.set(true);
@@ -45,7 +53,15 @@ async function login(options) {
 
         const authUser = await client.getUser();
 
-        isUser.set(typeof authUser != 'undefined');
+        if (typeof authUser != 'undefined') {
+            isUser.set(true);
+
+            const domains = (config.constraints || {}).domain || []
+            const domain = authUser.email.substring(authUser.email.indexOf('@')+1)
+
+            isAllowed.set(domains.indexOf(domain) >= 0);
+        }
+
         user.set(authUser);
     } finally {
         popupOpen.set(false);

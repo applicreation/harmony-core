@@ -4,7 +4,7 @@
     import {SyncLoader} from 'svelte-loading-spinners'
     import auth from "$lib/services/auth";
     import Menu from '$lib/components/Menu.svelte';
-    import {isAuthenticating, isChecked, isUser} from "$lib/stores/user.js";
+    import {isAuthenticating, isChecked, isUser, isAllowed} from "$lib/stores/user.js";
 
     onMount(async () => await auth.isAuthenticated());
 </script>
@@ -18,7 +18,7 @@
         <div class="w-100 h-100 py-5 d-flex align-items-center justify-content-center">
             <SyncLoader color="#F79905"/>
         </div>
-    {:else if !$isAuthenticating || $isUser}
+    {:else if !$isAuthenticating || ($isUser && $isAllowed)}
         <div class="row g-0 w-100">
             <div class="col-12 col-lg-2">
                 <Menu/>
@@ -33,9 +33,20 @@
                 {/if}
             </div>
         </div>
+    {:else if !$isAuthenticating || ($isUser && !$isAllowed)}
+        <div class="h-100 w-100 py-5 d-flex align-items-center justify-content-center auth">
+            <div class="alert alert-warning" role="alert">
+                <h4 class="alert-heading">Denied!</h4>
+                <p>You do not have access to view this page.</p>
+                <hr>
+                <p class="mb-0">
+                    <a href="#" class="alert-link" on:click="{auth.logout}">Logout</a>
+                </p>
+            </div>
+        </div>
     {:else}
         <div class="h-100 w-100 py-5 d-flex align-items-center justify-content-center auth">
-            <a class="btn btn-secondary" on:click="{auth.login}">Log In</a>
+            <a class="btn btn-secondary" on:click="{auth.login}">Login</a>
         </div>
     {/if}
 </div>
