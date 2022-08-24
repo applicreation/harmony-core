@@ -1,0 +1,33 @@
+import {redirect} from '@sveltejs/kit'
+import google from '$lib/services/google.js'
+import cookie from 'cookie'
+
+/** @type {import('./$types').LayoutServerLoad} */
+export async function load({request, setHeaders}) {
+    const isAuthenticating = await google.isAuthenticating()
+
+    if (isAuthenticating) {
+        const cookies = cookie.parse(request.headers.get('cookie') || '')
+
+        let isAuthenticated = cookies.access_token && await google.isAuthenticated(cookies.access_token)
+
+        if (!isAuthenticated && cookies.refresh_token) {
+            const tokens = await google.refresh(cookies.refresh_token)
+            const expires = new Date(tokens.expiry_date)
+
+            isAuthenticated = await google.isAuthenticated(tokens.access_token)
+
+            setHeaders({
+                'set-cookie': 'access_token=' + tokens.access_token + '; Expires=' + expires.toUTCString() + '; Path=/; Secure; HttpOnly;'
+            })
+        }
+
+        if (!isAuthenticated) {
+            throw redirect(301, '/auth')
+        }
+    }
+
+    return {
+        isAuthenticating
+    }
+}

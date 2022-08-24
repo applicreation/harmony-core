@@ -1,9 +1,12 @@
 ---
 
 auth:
-  auth0:
-    domain: harmony-dev.eu.auth0.com
-    client_id: peNrbX6FNFKezAEkjejd4bIvGOpXVh2d
+  clients:
+    google:
+      client_id: ${{GOOGLE_CLIENT_ID}}
+      sensitive:
+        client_secret: ${{GOOGLE_CLIENT_SECRET}}
+        redirect_url: ${{GOOGLE_REDIRECT_URL}}
 modules:
   - id: catalog
   - id: docs
