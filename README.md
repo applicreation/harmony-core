@@ -6,7 +6,8 @@ This is the core module used by Harmony.
 
 ## Prerequisites
 
-The only tool required is [Docker Desktop](https://www.docker.com/products/docker-desktop).
+* [Docker Desktop](https://www.docker.com/products/docker-desktop)
+* [git-secret](https://git-secret.io/installation)
 
 ## Usage
 
@@ -16,11 +17,13 @@ The only tool required is [Docker Desktop](https://www.docker.com/products/docke
 
 services:
   proxy:
-    image: ghcr.io/applicreation/harmony-proxy:latest
+    image: ghcr.io/applicreation/harmony-proxy:v0
     ports:
       - 80:80
   core:
-    image: ghcr.io/applicreation/harmony-core:latest
+    image: ghcr.io/applicreation/harmony-core:v0
+    env_file:
+      - ./.harmony/core/.env
     volumes:
       - ./.harmony/core:/root/.harmony:ro
   # module config
