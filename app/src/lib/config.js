@@ -1,6 +1,7 @@
 import os from 'os'
 import fs from 'fs'
 import YAML from 'yaml'
+import {browser} from '$app/env'
 
 let config
 
@@ -30,13 +31,13 @@ export async function getConfig() {
         const modules = {}
         for (const id of ids) {
             const configModule = {
-                urlCore: '/' + id,
+                urlCore: '/modules/' + id,
                 urlModule: '/module/' + id,
                 name: id,
                 description: null,
             }
 
-            const url = `http://proxy${configModule.urlModule}/module.json`
+            const url = `${!browser ? 'http://proxy' : ''}${configModule.urlModule}/module.json`
             const options = {headers: {'User-Agent': 'harmony-core'}}
 
             const response = await fetch(url, options)

@@ -3,4 +3,4 @@
     export let data
 </script>
 
-<a href="{data.signIn}">Sign In</a>
+<a href="{data.signIn}" class="btn btn-primary" role="button">Sign in with Google</a>

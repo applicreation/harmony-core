@@ -17,6 +17,8 @@ services:
     working_dir: /app
     env_file:
       - ./.harmony/core/.env
+    environment:
+      GOOGLE_REDIRECT_HOST: http://localhost
     volumes:
       - ./.harmony/core:/root/.harmony:ro
       - ./app:/app

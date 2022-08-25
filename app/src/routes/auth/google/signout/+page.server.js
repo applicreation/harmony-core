@@ -11,6 +11,10 @@ export async function load({request, setHeaders}) {
     }
 
     setHeaders({
+        'Cache-Control': 'no-store',
+    })
+
+    setHeaders({
         'set-cookie': 'access_token=; Expires=' + (new Date()).toUTCString() + '; Path=/; Secure; HttpOnly;',
     })
 
@@ -18,5 +22,5 @@ export async function load({request, setHeaders}) {
         'set-cookie': 'refresh_token=; Expires=' + (new Date()).toUTCString() + '; Path=/; Secure; HttpOnly;',
     })
 
-    throw redirect(301, '/');
+    throw redirect(301, '/')
 }

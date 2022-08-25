@@ -6,16 +6,16 @@ async function getConfigAuth() {
 }
 
 async function getClient() {
-    const configAuthGoogle = (await getConfigAuth()).google || {}
+    const configAuthGoogle = ((await getConfigAuth()).clients || {}).google || {}
 
-    if (!configAuthGoogle.client_id || !configAuthGoogle.sensitive.client_secret) {
+    if (!configAuthGoogle.client_id || !configAuthGoogle.client_secret || !configAuthGoogle.redirect_host) {
         return null
     }
 
     return new OAuth2Client(
         configAuthGoogle.client_id,
-        configAuthGoogle.sensitive.client_secret,
-        'http://localhost/auth/google/callback',
+        configAuthGoogle.client_secret,
+        configAuthGoogle.redirect_host + '/auth/google/callback',
     )
 }
 
@@ -27,8 +27,7 @@ async function isAuthenticated(accessToken) {
     const client = await getClient()
 
     try {
-        const tokenInfo = await client.getTokenInfo(accessToken)
-        console.log('tokenInfo', tokenInfo)
+        await client.getTokenInfo(accessToken)
     } catch (e) {
         console.error(e)
         return false

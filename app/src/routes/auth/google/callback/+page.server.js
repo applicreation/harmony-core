@@ -5,6 +5,10 @@ import google from '$lib/services/google.js'
 export async function load({url, setHeaders}) {
     console.log('callback +page.server.js')
 
+    setHeaders({
+        'Cache-Control': 'no-store',
+    })
+
     const code = url.searchParams.get('code')
     if (!code) {
         throw redirect(301, '/auth')
@@ -28,7 +32,7 @@ export async function load({url, setHeaders}) {
 
     if (refreshToken) {
         setHeaders({
-            'set-cookie': 'refresh_token=' + refreshToken + '; Path=/; Secure; HttpOnly; SameSite=Strict;'
+            'set-cookie': 'refresh_token=' + refreshToken + '; Path=/; Secure; HttpOnly;'
         })
     }
 

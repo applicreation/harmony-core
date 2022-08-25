@@ -1,12 +1,18 @@
 import {redirect} from '@sveltejs/kit'
+import {getConfig} from '$lib/config'
 import google from '$lib/services/google.js'
 import cookie from 'cookie'
 
 /** @type {import('./$types').LayoutServerLoad} */
 export async function load({request, setHeaders}) {
+    const config = await getConfig()
     const isAuthenticating = await google.isAuthenticating()
 
     if (isAuthenticating) {
+        setHeaders({
+            'Cache-Control': 'no-store',
+        })
+
         const cookies = cookie.parse(request.headers.get('cookie') || '')
 
         let isAuthenticated = cookies.access_token && await google.isAuthenticated(cookies.access_token)
@@ -28,6 +34,7 @@ export async function load({request, setHeaders}) {
     }
 
     return {
-        isAuthenticating
+        isAuthenticating,
+        modules: config.modules || {}
     }
 }
