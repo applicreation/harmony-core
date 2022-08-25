@@ -37,5 +37,11 @@ modules: [ ]
 ## Development
 
 ```shell
+git secret init
+git secret reveal
+```
+
+```shell
+docker compose run --rm core npm install
 docker compose up
 ```
