@@ -11,7 +11,8 @@
                     <div class="card h-100">
                         <div class="card-body">
                             <h5 class="card-title">
-                                <a href="{module.urlCore}" class="text-body text-decoration-none">{module.name}</a></h5>
+                                <a href="{module.urlCore}" class="text-body text-decoration-none">{module.name}</a>
+                            </h5>
                             <p class="card-text">{module.description || 'No description available.'}</p>
                         </div>
                         <div class="card-footer p-2">
