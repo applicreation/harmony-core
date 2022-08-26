@@ -5,11 +5,6 @@ export async function load({params, fetch}) {
     const url = `${!browser ? 'http://proxy' : ''}/module/${params.catchall}`
     const options = {headers: {'User-Agent': 'harmony-core'}}
 
-    let base = params.catchall
-    if (base.indexOf('.') > 0) {
-        base = base.substring(0, base.indexOf('/'))
-    }
-
     const response = await fetch(url, options)
 
     let html = await response.text()
@@ -18,7 +13,6 @@ export async function load({params, fetch}) {
     }
 
     return {
-        base,
         html
     }
 }
