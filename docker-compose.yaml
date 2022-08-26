@@ -18,7 +18,7 @@ services:
     env_file:
       - ./.harmony/core/.env
     environment:
-      GOOGLE_REDIRECT_HOST: http://localhost
+      BASE_URL: http://localhost
     volumes:
       - ./.harmony/core:/root/.harmony:ro
       - ./app:/app

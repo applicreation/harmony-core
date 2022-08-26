@@ -1,21 +1,20 @@
 import {OAuth2Client} from 'google-auth-library'
 import {getConfig} from '$lib/config'
 
-async function getConfigAuth() {
-    return (await getConfig() || {}).auth || {}
-}
-
 async function getClient() {
-    const configAuthGoogle = ((await getConfigAuth()).clients || {}).google || {}
+    const config = await getConfig() || {}
+    const configAuth = config.auth || {}
+    const configAuthClients = configAuth.clients || {}
+    const configAuthClientsGoogle = configAuthClients.google || {}
 
-    if (!configAuthGoogle.client_id || !configAuthGoogle.client_secret || !configAuthGoogle.redirect_host) {
+    if (!configAuthClientsGoogle.client_id || !configAuthClientsGoogle.client_secret || !config.base_url) {
         return null
     }
 
     return new OAuth2Client(
-        configAuthGoogle.client_id,
-        configAuthGoogle.client_secret,
-        configAuthGoogle.redirect_host + '/auth/google/callback',
+        configAuthClientsGoogle.client_id,
+        configAuthClientsGoogle.client_secret,
+        config.base_url + '/auth/google/callback',
     )
 }
 
