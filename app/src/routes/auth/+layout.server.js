@@ -16,6 +16,6 @@ export async function load({ setHeaders }) {
             'set-cookie': 'refresh_token=; Expires=' + (new Date()).toUTCString() + '; Path=/; Secure; HttpOnly;'
         })
 
-        throw redirect(301, '/')
+        throw redirect(302, '/')
     }
 }

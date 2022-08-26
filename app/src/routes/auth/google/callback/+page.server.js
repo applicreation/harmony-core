@@ -11,7 +11,7 @@ export async function load({url, setHeaders}) {
 
     const code = url.searchParams.get('code')
     if (!code) {
-        throw redirect(301, '/auth')
+        throw redirect(302, '/auth')
     }
 
     let accessToken, refreshToken, expires
@@ -23,11 +23,11 @@ export async function load({url, setHeaders}) {
         refreshToken = tokens.refresh_token
         expires = new Date(tokens.expiry_date)
     } catch {
-        throw redirect(301, '/auth')
+        throw redirect(302, '/auth')
     }
 
     if (!accessToken || !expires) {
-        throw redirect(301, '/auth')
+        throw redirect(302, '/auth')
     }
 
     if (refreshToken) {
@@ -40,5 +40,5 @@ export async function load({url, setHeaders}) {
         'set-cookie': 'access_token=' + accessToken + '; Expires=' + expires.toUTCString() + '; Path=/; Secure; HttpOnly;'
     })
 
-    throw redirect(301, '/')
+    throw redirect(302, '/')
 }

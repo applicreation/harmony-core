@@ -40,7 +40,7 @@ export async function load({request, setHeaders}) {
                 'set-cookie': 'refresh_token=; Expires=' + (new Date()).toUTCString() + '; Path=/; Secure; HttpOnly;',
             })
 
-            throw redirect(301, '/auth')
+            throw redirect(302, '/auth')
         }
     }
 
