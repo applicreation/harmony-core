@@ -19,16 +19,27 @@ export async function load({request, setHeaders}) {
 
         if (!isAuthenticated && cookies.refresh_token) {
             const tokens = await google.refresh(cookies.refresh_token)
-            const expires = new Date(tokens.expiry_date)
 
-            isAuthenticated = await google.isAuthenticated(tokens.access_token)
+            if (tokens.access_token) {
+                const expires = new Date(tokens.expiry_date)
 
-            setHeaders({
-                'set-cookie': 'access_token=' + tokens.access_token + '; Expires=' + expires.toUTCString() + '; Path=/; Secure; HttpOnly;'
-            })
+                isAuthenticated = await google.isAuthenticated(tokens.access_token)
+
+                setHeaders({
+                    'set-cookie': 'access_token=' + tokens.access_token + '; Expires=' + expires.toUTCString() + '; Path=/; Secure; HttpOnly;'
+                })
+            }
         }
 
         if (!isAuthenticated) {
+            setHeaders({
+                'set-cookie': 'access_token=; Expires=' + (new Date()).toUTCString() + '; Path=/; Secure; HttpOnly;',
+            })
+
+            setHeaders({
+                'set-cookie': 'refresh_token=; Expires=' + (new Date()).toUTCString() + '; Path=/; Secure; HttpOnly;',
+            })
+
             throw redirect(301, '/auth')
         }
     }

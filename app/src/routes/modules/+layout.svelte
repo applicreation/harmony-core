@@ -8,8 +8,8 @@
 
 <header class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/">Harmony</a>
-        {#if Object.values(data.modules).length > 0}
+        <a href="/modules" class="navbar-brand">Harmony</a>
+        {#if data.isAuthenticating || Object.values(data.modules).length > 0}
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>

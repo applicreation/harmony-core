@@ -63,7 +63,11 @@ async function refresh(refreshToken) {
 
     client.setCredentials({refresh_token: refreshToken})
 
-    return (await client.refreshAccessToken()).credentials
+    try {
+        return (await client.refreshAccessToken()).credentials
+    } catch {
+        return {}
+    }
 }
 
 export default {
