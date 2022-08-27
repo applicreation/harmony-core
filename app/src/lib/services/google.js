@@ -14,7 +14,7 @@ async function getClient() {
     return new OAuth2Client(
         configAuthClientsGoogle.client_id,
         configAuthClientsGoogle.client_secret,
-        config.base_url + '/auth/google/callback',
+        config.base_url + '/auth/google/callback/',
     )
 }
 
