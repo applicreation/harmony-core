@@ -3,8 +3,6 @@ import google from '$lib/services/google.js'
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({url, setHeaders}) {
-    console.log('callback +page.server.js')
-
     setHeaders({
         'Cache-Control': 'no-store',
     })

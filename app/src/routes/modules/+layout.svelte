@@ -10,7 +10,8 @@
     <div class="container-fluid">
         <a href="/modules" class="navbar-brand">Harmony</a>
         {#if data.isAuthenticating || Object.values(data.modules).length > 0}
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-menu"
+                    aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
         {/if}
@@ -28,8 +29,36 @@
             {#if Object.values(data.modules).length > 0}
                 <div class="list-group bg-white mb-3">
                     {#each Object.values(data.modules) as module}
-                        <a href="{module.urlCore}" class="list-group-item list-group-item-action">
-                            {module.name}
+                        <a href="{module.urlCore}" class="list-group-item list-group-item-action position-relative">
+                            {module.name || module._computed.id}
+                            <div class="position-absolute top-50 end-0 translate-middle-y small">
+                                {#if module._computed.version.upgrade === 'misconfigured' }
+                                    <span class="badge text-bg-danger me-2" data-bs-toggle="tooltip"
+                                          data-bs-placement="left" data-bs-title="Module misconfigured">
+                                        <i class="fa-solid fa-xmark"></i>
+                                    </span>
+                                {:else if module._computed.version.upgrade === 'patch' }
+                                    <span class="badge text-bg-success me-2" data-bs-toggle="tooltip"
+                                          data-bs-placement="left" data-bs-title="Patch update available">
+                                        <i class="fa-solid fa-arrow-up"></i>
+                                    </span>
+                                {:else if module._computed.version.upgrade === 'minor'}
+                                    <span class="badge text-bg-warning me-2" data-bs-toggle="tooltip"
+                                          data-bs-placement="left" data-bs-title="Minor update available">
+                                        <i class="fa-solid fa-arrow-up"></i>
+                                    </span>
+                                {:else if module._computed.version.upgrade === 'major'}
+                                    <span class="badge text-bg-danger me-2" data-bs-toggle="tooltip"
+                                          data-bs-placement="left" data-bs-title="Major update available">
+                                        <i class="fa-solid fa-arrow-up"></i>
+                                    </span>
+                                {:else if module._computed.version.upgrade === 'unknown'}
+                                    <span class="badge text-bg-secondary me-2" data-bs-toggle="tooltip"
+                                          data-bs-placement="left" data-bs-title="Unknown version">
+                                    <i class="fa-solid fa-question"></i>
+                                </span>
+                                {/if}
+                            </div>
                         </a>
                     {/each}
                 </div>
