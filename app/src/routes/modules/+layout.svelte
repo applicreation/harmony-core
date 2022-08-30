@@ -29,7 +29,8 @@
             {#if Object.values(data.modules).length > 0}
                 <div class="list-group bg-white mb-3">
                     {#each Object.values(data.modules) as module}
-                        <a href="{module.urlCore}" class="list-group-item list-group-item-action position-relative">
+                        <a href="{module._computed.url.core}"
+                           class="list-group-item list-group-item-action position-relative">
                             {module.name || module._computed.id}
                             <div class="position-absolute top-50 end-0 translate-middle-y small">
                                 {#if module._computed.version.upgrade === 'misconfigured' }

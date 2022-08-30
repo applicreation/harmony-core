@@ -11,12 +11,12 @@
                     <div class="card h-100">
                         <div class="card-body">
                             <h5 class="card-title">
-                                <a href="{module.urlCore}" class="text-body text-decoration-none">{module.name}</a>
+                                <a href="{module._computed.url.core}" class="text-body text-decoration-none">{module.name}</a>
                             </h5>
                             <p class="card-text">{module.description || 'No description available.'}</p>
                         </div>
                         <div class="card-footer p-2">
-                            <a href="{module.urlCore}" class="btn btn-sm btn-primary">Open</a>
+                            <a href="{module._computed.url.core}" class="btn btn-sm btn-primary">Open</a>
                         </div>
                     </div>
                 </div>
