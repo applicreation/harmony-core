@@ -1,7 +1,7 @@
 <script>
     import {navigating} from '$app/stores'
     import {invalidate} from '$app/navigation'
-    import SignIn from '$lib/components/signIn.svelte'
+    import SignIn from '$lib/components/SignIn.svelte'
 
     /** @type {import('./$types').PageData} */
     export let data
