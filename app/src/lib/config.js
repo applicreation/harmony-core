@@ -22,6 +22,8 @@ export async function getConfig() {
 
         config = YAML.parse(file)
 
+        config.auth = getConfigAuth(config.auth || {})
+
         const ids = []
         for (const module of Object.values(config.modules || {})) {
             const id = module.id || null
@@ -41,6 +43,18 @@ export async function getConfig() {
     }
 
     return config
+}
+
+function getConfigAuth(auth) {
+    const tokenSecret = auth.token_secret || null
+    const googleClientId = (auth.google || {}).client_id || null
+    const isAuthenticating = tokenSecret !== null && googleClientId !== null
+
+    return {...auth, ...{
+        _computed: {
+            isAuthenticating
+        }
+    }}
 }
 
 async function getConfigModule(id) {

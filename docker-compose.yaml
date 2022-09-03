@@ -17,6 +17,7 @@ services:
     working_dir: /app
     env_file:
       - ./.harmony/core/.env
+      - ./.harmony/core/local.env
     environment:
       BASE_URL: http://localhost
     volumes:
