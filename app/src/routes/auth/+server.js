@@ -1,7 +1,9 @@
 import {error, json} from '@sveltejs/kit'
 import {OAuth2Client} from 'google-auth-library'
-import {sign, verify} from 'jsonwebtoken'
+import jsonwebtoken from 'jsonwebtoken'
 import {getConfig} from '$lib/config'
+
+const { verify, sign } = jsonwebtoken
 
 const COOKIE_NAME = 'harmony_token'
 
