@@ -1,6 +1,5 @@
 ---
 
-base_url: ${{BASE_URL}}
 auth:
   token_secret: ${{AUTH_TOKEN_SECRET}}
   token_ttl: ${{AUTH_TOKEN_TTL}}
