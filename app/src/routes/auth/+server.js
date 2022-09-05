@@ -21,19 +21,26 @@ export async function GET({request}) {
         throw error(401, 'Token not found')
     }
 
-    try {
-        const tokenSecret = getTokenSecret(config)
-        const response = verify(token, tokenSecret)
+    let tokenDetails
 
-        return json({
-            ...{
-                type: 'user'
-            },
-            ...response,
-        })
+    try {
+        tokenDetails = verify(token, getTokenSecret(config))
     } catch {
         throw error(401, 'Token not verified')
     }
+
+    const domains = getConstraintsDomains(config)
+    const domain = tokenDetails.email.substring(tokenDetails.email.indexOf('@')+1)
+    if (domains.length > 0 && domains.indexOf(domain) < 0) {
+        throw error(403, 'Forbidden')
+    }
+
+    return json({
+        ...{
+            type: 'user'
+        },
+        ...tokenDetails,
+    })
 }
 
 /** @type {import('./$types').RequestHandler} */
@@ -96,12 +103,21 @@ function getGoogleClientId(config) {
 
 function getTokenSecret(config) {
     const configAuth = config.auth || {}
+    const configAuthToken = configAuth.token || {}
 
-    return configAuth.token_secret || null
+    return configAuthToken.secret || null
 }
 
 function getTokenTtl(config) {
     const configAuth = config.auth || {}
+    const configAuthToken = configAuth.token || {}
 
-    return configAuth.token_ttl || null
+    return configAuthToken.ttl || null
+}
+
+function getConstraintsDomains(config) {
+    const configAuth = config.auth || {}
+    const configAuthConstraints = configAuth.constraints || {}
+
+    return configAuthConstraints.domains || []
 }

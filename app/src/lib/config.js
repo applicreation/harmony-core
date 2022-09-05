@@ -46,7 +46,8 @@ export async function getConfig() {
 }
 
 function getConfigAuth(auth) {
-    const tokenSecret = auth.token_secret || null
+    const token = auth.token || {}
+    const tokenSecret = token.secret || null
     const googleClientId = (auth.google || {}).client_id || null
     const isAuthenticating = tokenSecret !== null && googleClientId !== null
 

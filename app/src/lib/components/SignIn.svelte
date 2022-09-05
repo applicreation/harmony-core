@@ -1,6 +1,6 @@
 <script>
     import {onMount} from 'svelte'
-    import {invalidate} from '$app/navigation'
+    import {invalidateAll} from '$app/navigation'
 
     export let googleClientId
 
@@ -20,7 +20,7 @@
                     })
                 })
 
-                await invalidate()
+                await invalidateAll()
             },
             client_id: googleClientId,
         })

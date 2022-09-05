@@ -1,6 +1,6 @@
 <script>
     import {navigating} from '$app/stores'
-    import {invalidate} from '$app/navigation'
+    import {invalidateAll} from '$app/navigation'
     import SignIn from '$lib/components/SignIn.svelte'
 
     /** @type {import('./$types').PageData} */
@@ -13,7 +13,7 @@
 
         window.google.accounts.id.disableAutoSelect()
 
-        await invalidate()
+        await invalidateAll()
     }
 </script>
 
@@ -33,9 +33,22 @@
     <div class="px-5 m-auto">
         <span class="spinner-border spinner-border-lg" role="status" aria-hidden="true"></span>
     </div>
-{:else if data.isAuthenticated === false}
+{:else if data.isAuthenticated === 401}
     <SignIn googleClientId="{data.googleClientId}"></SignIn>
-{:else if data.isAuthenticated === true}
+{:else if data.isAuthenticated === 403}
+    <div class="px-5 m-auto">
+        <div class="alert alert-warning" role="alert">
+            <h4 class="alert-heading">Forbidden</h4>
+            <p>You do not have access to view this, have you signed in with the correct account?</p>
+            <hr>
+            <p class="mb-0">
+                <a href="#" on:click={signOut} class="btn btn-warning" data-sveltekit-reload>
+                    Sign out
+                </a>
+            </p>
+        </div>
+    </div>
+{:else}
     <div class="flex-grow-1 d-lg-flex">
         <div class="row g-0 w-100">
             <nav id="main-menu" class="col-12 col-lg-2 p-3 bg-light collapse">
@@ -82,9 +95,10 @@
                         {/each}
                     </div>
                 {/if}
-                {#if data.isAuthenticated == true}
+                {#if data.isAuthenticated > 0}
                     <div class="list-group bg-white">
-                        <a sveltekit:reload href="#" on:click={signOut} class="list-group-item list-group-item-action">
+                        <a href="#" on:click={signOut} class="list-group-item list-group-item-action"
+                           data-sveltekit-reload>
                             Sign out
                         </a>
                     </div>

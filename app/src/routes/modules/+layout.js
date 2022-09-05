@@ -14,9 +14,11 @@ export async function load({data, fetch}) {
 
     try {
         const response = await fetch(url, options)
-        isAuthenticated = response.status === 200
+        const json = await response.json()
+
+        isAuthenticated = json.type === 'guest' ? -1 : response.status
     } catch {
-        isAuthenticated = false
+        isAuthenticated = 401
     }
 
     return {
