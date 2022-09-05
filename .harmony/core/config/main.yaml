@@ -6,9 +6,6 @@ auth:
     ttl: ${{AUTH_TOKEN_TTL}}
   google:
     client_id: ${{AUTH_GOOGLE_CLIENT_ID}}
-  constraints:
-    domains:
-      - test.com
 github:
   token: ${{GITHUB_TOKEN}}
 modules:
