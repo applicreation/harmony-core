@@ -51,7 +51,7 @@
 {:else}
     <div class="flex-grow-1 d-lg-flex">
         <div class="row g-0 w-100">
-            <nav id="main-menu" class="col-12 col-lg-2 p-3 bg-light collapse">
+            <nav id="main-menu" class="col-12 col-lg-2 p-3 bg-light collapse border-end border-bottom">
                 <div class="list-group bg-white mb-3">
                     <div class="list-group bg-white">
                         <a href="/modules" class="list-group-item list-group-item-action">Home</a>
@@ -60,37 +60,8 @@
                 {#if Object.values(data.modules).length > 0}
                     <div class="list-group bg-white mb-3">
                         {#each Object.values(data.modules) as module}
-                            <a href="{module._computed.url.core}"
-                               class="list-group-item list-group-item-action position-relative">
+                            <a href="{module._computed.url.core}" class="list-group-item list-group-item-action">
                                 {module.name || module._computed.id}
-                                <div class="position-absolute top-50 end-0 translate-middle-y small">
-                                    {#if module._computed.version.upgrade === 'misconfigured' }
-                                    <span class="badge text-bg-danger me-2" data-bs-toggle="tooltip"
-                                          data-bs-placement="left" data-bs-title="Module misconfigured">
-                                        <i class="fa-solid fa-xmark"></i>
-                                    </span>
-                                    {:else if module._computed.version.upgrade === 'patch' }
-                                    <span class="badge text-bg-success me-2" data-bs-toggle="tooltip"
-                                          data-bs-placement="left" data-bs-title="Patch update available">
-                                        <i class="fa-solid fa-arrow-up"></i>
-                                    </span>
-                                    {:else if module._computed.version.upgrade === 'minor'}
-                                    <span class="badge text-bg-warning me-2" data-bs-toggle="tooltip"
-                                          data-bs-placement="left" data-bs-title="Minor update available">
-                                        <i class="fa-solid fa-arrow-up"></i>
-                                    </span>
-                                    {:else if module._computed.version.upgrade === 'major'}
-                                    <span class="badge text-bg-danger me-2" data-bs-toggle="tooltip"
-                                          data-bs-placement="left" data-bs-title="Major update available">
-                                        <i class="fa-solid fa-arrow-up"></i>
-                                    </span>
-                                    {:else if module._computed.version.upgrade === 'unknown'}
-                                    <span class="badge text-bg-secondary me-2" data-bs-toggle="tooltip"
-                                          data-bs-placement="left" data-bs-title="Unknown version">
-                                    <i class="fa-solid fa-question"></i>
-                                </span>
-                                    {/if}
-                                </div>
                             </a>
                         {/each}
                     </div>
@@ -121,6 +92,12 @@
     @media (min-width: 992px) {
         #main-menu {
             display: block !important;
+            border-bottom: 0 !important;
+        }
+    }
+    @media (max-width: 991px) {
+        #main-menu {
+            border-right: 0 !important;
         }
     }
 </style>

@@ -1,7 +1,7 @@
 import {browser} from '$app/environment'
 
 /** @type {import('./$types').PageLoad} */
-export async function load({params, fetch}) {
+export async function load({data, params, fetch}) {
     const url = `${!browser ? 'http://proxy' : ''}/module/${params.catchall}`
     const options = {headers: {'User-Agent': 'harmony-core'}}
 
@@ -13,6 +13,7 @@ export async function load({params, fetch}) {
     }
 
     return {
-        html
+        ...data,
+        ...{html}
     }
 }
