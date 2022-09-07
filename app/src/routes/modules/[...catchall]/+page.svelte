@@ -3,7 +3,7 @@
     export let data
 </script>
 
-<div class="">
+<div class="h-100 d-flex flex-column">
     <div class="p-3 d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center border-bottom">
         <h1 class="h2 m-0">{data.module.name}</h1>
         <div>
@@ -25,7 +25,7 @@
         </div>
     </div>
 
-    <div>
+    <div class="flex-grow-1">
         {@html data.html}
     </div>
 </div>
