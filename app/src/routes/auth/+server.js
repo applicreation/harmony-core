@@ -44,7 +44,7 @@ export async function GET({request}) {
 }
 
 /** @type {import('./$types').RequestHandler} */
-export async function POST({request, setHeaders}) {
+export async function POST({request, cookies}) {
     const body = await request.json() || {}
     const credential = body.credential || null
     if (credential === null) {
@@ -71,13 +71,9 @@ export async function POST({request, setHeaders}) {
         picture: ticket.getPayload().picture,
     }, tokenSecret)
 
-    let tokenTtl = getTokenTtl(config)
-    if (tokenTtl !== null) {
-        tokenTtl = 'Max-Age=' + tokenTtl + '; '
-    }
-
-    setHeaders({
-        'set-cookie': COOKIE_NAME + '=' + token + ';' + tokenTtl + ' Path=/; Secure; HttpOnly;'
+    cookies.set(COOKIE_NAME, token, {
+        maxAge: getTokenTtl(config),
+        path: '/',
     })
 
     return json({
@@ -86,9 +82,10 @@ export async function POST({request, setHeaders}) {
 }
 
 /** @type {import('./$types').RequestHandler} */
-export function DELETE({setHeaders}) {
-    setHeaders({
-        'set-cookie': COOKIE_NAME + '=; Expires=' + (new Date()).toUTCString() + '; Path=/; Secure; HttpOnly;'
+export function DELETE({cookies}) {
+    cookies.set(COOKIE_NAME, '', {
+        expires: new Date(0),
+        path: '/',
     })
 
     return json(null)

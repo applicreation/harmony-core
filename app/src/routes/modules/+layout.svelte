@@ -8,7 +8,7 @@
 
     async function signOut() {
         await fetch('/auth/', {
-            method: 'DELETE'
+            method: 'DELETE',
         })
 
         window.google.accounts.id.disableAutoSelect()
