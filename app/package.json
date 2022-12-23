@@ -13,7 +13,7 @@
 	"dependencies": {
 		"@octokit/graphql": "^5.0.1",
 		"google-auth-library": "^8.3.0",
-		"jsonwebtoken": "^8.5.1",
+		"jsonwebtoken": "^9.0.0",
 		"yaml": "^2.1.1"
 	},
 	"devDependencies": {
